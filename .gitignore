@@ -1,0 +1,31 @@
+# User Settings Files
+*.suo
+*.user
+*.cache
+
+# Build Folders
+obj/
+bin/
+
+# Nuget Packages
+packages/
+
+# Test Results
+TestResults
+TestResult.xml
+
+# Temporary Files
+*.log
+*.tmp
+
+# Git-Related Files
+*.orig
+*.patch
+*.rej
+
+# Windows Junk
+Thumbs.db
+Desktop.ini
+
+# OS X Junk
+.DS_Store

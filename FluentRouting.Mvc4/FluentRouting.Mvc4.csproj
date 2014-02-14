@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{612BDBBB-617A-424D-B0C9-D7C7B8D8477D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FluentRouting</RootNamespace>
+    <AssemblyName>FluentRouting.Mvc4</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;MVC MVC4</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;MVC MVC4</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\FluentRouting\ConstraintExtensions.cs">
+      <Link>ConstraintExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\Constraints\GuidConstraint.cs">
+      <Link>Constraints\GuidConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\Error.cs">
+      <Link>Error.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\IActionRouteBuilder.cs">
+      <Link>IActionRouteBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\IFluent.cs">
+      <Link>IFluent.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\IParameterRouteBuilder.cs">
+      <Link>IParameterRouteBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\IRelativeRouteBuilder.cs">
+      <Link>IRelativeRouteBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\IRouteBuilder.cs">
+      <Link>IRouteBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\IUrlRouteBuilder.cs">
+      <Link>IUrlRouteBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\ParameterRouteBuilder.cs">
+      <Link>ParameterRouteBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\Properties\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\Require.cs">
+      <Link>Require.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\RouteBuilder.cs">
+      <Link>RouteBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\RouteExtensions.cs">
+      <Link>RouteExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\RouteScope.cs">
+      <Link>RouteScope.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\TypeExtensions.cs">
+      <Link>TypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FluentRouting\UrlRouteBuilder.cs">
+      <Link>UrlRouteBuilder.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+</Project>
