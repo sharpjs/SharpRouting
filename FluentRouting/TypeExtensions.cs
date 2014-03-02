@@ -43,7 +43,7 @@ namespace FluentRouting
             if (method == null || method.ReturnType != typeof(void))
                 throw Error.SpecificationNotFound(controllerType);
 
-            return (Action<IRouteBuilder>) method.CreateDelegate(typeof(Action<IRouteBuilder>));
+            return (Action<IRouteBuilder>) Delegate.CreateDelegate(typeof(Action<IRouteBuilder>), method);
         }
 
         private const string

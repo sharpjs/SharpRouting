@@ -7,7 +7,10 @@ using System.Security;
 [assembly: AssemblyProduct   ("Fluent Routing")]
 [assembly: AssemblyCompany   ("Jeff Sharp")]
 [assembly: AssemblyCopyright ("Copyright © 2014 Jeff Sharp")]
-[assembly: AssemblyVersion   ("1.0.*")]
+
+// Version
+[assembly: AssemblyVersion              ("1.0.*")]        // Assembly
+[assembly: AssemblyInformationalVersion ("1.0.0-beta1")]  // NuGet Package
 
 // Compliance
 [assembly: CLSCompliant(true)]
