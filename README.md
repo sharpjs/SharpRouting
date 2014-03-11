@@ -25,18 +25,21 @@ Next, you should add a **using** directive at the top of each file that uses Flu
 using FluentRouting;
 ```
 
-### Mapping the Root Controller
+## The Root Controller
 
-Most projects have a **root controller**.  Often called **HomeController**, this controller handles requests to the app's base URL.  Let's create a route for it - fluently.
+Most projects have a **root controller**.  Often called **HomeController**, this controller handles requests to the app's base URL.  Let's create a route for it — fluently.
 
-In **RouteConfig**, we need just one line to identify the root controller.
-
+In **RouteConfig**, we need just one line to identify the root controller:
 ```cs
-routes.MapController<HomeController>();
+public static void RegisterRoutes(RouteCollection routes)
+{
+    // ...
+    routes.MapController<HomeController>();
+    // ...
+}
 ```
 
-In **HomeController**, we map the route:
-
+In **HomeController**, we express the route:
 ```cs
 public static void RegisterRoutes(IRouteBuilder root)
 {
@@ -46,27 +49,85 @@ public static void RegisterRoutes(IRouteBuilder root)
 
 Let's look at this in detail.
 
-The **RegisterRoutes** method is special.  When you tell Fluent Routing to map routes for a controller, Fluent Routing finds this method in the controller and executes the routing instructions within it.  This allows you to put routing code near the relevant action code, avoiding a huge RouteConfig.cs.  This doesn't appeal to everyone, so Fluent Routing provides a few alternative ways to organize -- more on that later.
+The **RegisterRoutes** method is special.  When you tell Fluent Routing to map routes for a controller, Fluent Routing finds this method in the controller and executes the routing instructions within it.  This enables you to express routing code in small chunks located located near the relevant action code, rather than in one huge, merge-conflict-prone RouteConfig.cs.  This practice doesn't appeal to everyone, so Fluent Routing provides a few alternative ways to organize routes — more on that later.
 
 `Url("")` begins mapping a route for a URL.  In this case, the URL is empty, meaning that the route will apply to requests for the application base URL itself.
 
 `Get()` means that the route will apply only to GET requests.
 
-`IsAction("Index")` indicates the action name that will handle the requests.  This method also creates the route and adds it to the route collection.
+`IsAction("Index")` indicates the name of the action name that will handle requests.  This method also creates the route and adds it to the route collection.
 
-### Mapping Controllers
+TODO: Show equivalent traditional route here.
+
+## Controllers
+
+Once Fluent Routing knows about the root controller, we are ready to create routes for the other controllers in the application.  Let's create routes for **ArticleController**, which represents a collection of articles on a hypothetical blog.
+
+In **HomeController**, we point to our new controller.
+```cs
+public static void RegisterRoutes(IRouteBuilder root)
+{
+    root.Url("articles").IsController<ArticleController>();
+}
+```
+
+In **ArticleController**, we create the routes:
+```cs
+public static void RegisterRoutes(IRouteBuilder articles)
+{
+    articles.Url("")   .Get()  .IsAction("Index");
+    articles.Url("new").Get()  .IsAction("New");
+    articles.Url("")   .Post() .IsAction("Create");
+}
+```
+
+`root.Url("articles")` begins the mapping for a URL.  Because it appears in the root controller, it is relative to the application base URL.
+
+`.IsController<ArticleController>()` maps the URL to **ArticleController**.  Fluent Routing discovers the controller's **RegisterRoutes** method and invokes it.
+
+`articles.Url("new")` begins the mapping for a URL.  Because it appears in **ArticleController**, it is relative *to the URL of **ArticleController***, which is `articles`.  Thus the entire URL being mapped is `articles/new`.
+
+`.Get()` indicates that the route will apply only to GET requests.
+
+`.IsAction("New");` indicates the name of the action name that will handle requests.  This method also creates the route and adds it to the route collection.
+
+In Fluent Routing, controllers are organized hierarchically.  Except for the root controller, each controller must be the child of some parent controller.  The parent can be the root controller itself, or the parent can be some other controller.  **Each controller inherits the routing information from its parent.**  This frees you from having to duplicate the same URLs, defaults, and constraints across many routes in your application.  In most cases with Fluent Routing, you only need to specify these things once.
+
+## Parameters
 
 In progress
 
-### Parameters
+Typical example:
+```cs
+articles.Parameter("id").IsAction("Show");
+```
+
+Multiple parameters:
+```cs
+articles.Parameter("year").Parameter("id").IsAction("Show");
+```
+
+More options:
+```cs
+articles.Parameter("id").Optional()     .IsAction("Show");
+articles.Parameter("id").Default(...)   .IsAction("Show");
+articles.Parameter("id").Pattern(...)   .IsAction("Show");
+articles.Parameter("id").Constraint(...).IsAction("Show");
+```
+
+## Subscopes (Name?)
 
 In progress
 
-### Subscopes (Name?)
+```cs
+articles.Parameter("id").Is(article =>
+{
+    article.Url("").Get().IsAction("Show");
+    article.Url("").Put().IsAction("Update");
+});
+```
 
-In progress
-
-### Areas
+## Areas
 
 In progress
 
