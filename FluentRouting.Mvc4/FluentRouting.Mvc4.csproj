@@ -50,6 +50,9 @@
     <Compile Include="..\FluentRouting\Constraints\GuidConstraint.cs">
       <Link>Constraints\GuidConstraint.cs</Link>
     </Compile>
+    <Compile Include="..\FluentRouting\Constraints\Int32Constraint.cs">
+      <Link>Constraints\Int32Constraint.cs</Link>
+    </Compile>
     <Compile Include="..\FluentRouting\Error.cs">
       <Link>Error.cs</Link>
     </Compile>

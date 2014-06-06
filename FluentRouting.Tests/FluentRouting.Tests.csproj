@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="AssertionExtensions.cs" />
     <Compile Include="Constraints\GuidConstraintTests.cs" />
+    <Compile Include="Constraints\Int32ConstraintTests.cs" />
     <Compile Include="FakeConstraint.cs" />
     <Compile Include="FakeControllers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

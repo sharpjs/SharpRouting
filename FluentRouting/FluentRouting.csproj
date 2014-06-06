@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="ConstraintExtensions.cs" />
     <Compile Include="Constraints\GuidConstraint.cs" />
+    <Compile Include="Constraints\Int32Constraint.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="IActionRouteBuilder.cs" />
     <Compile Include="IFluent.cs" />
