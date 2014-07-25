@@ -15,5 +15,5 @@ using System.Security;
 
 // Testing
 #if DEBUG
-    [assembly: InternalsVisibleTo("SharpRouting.Tests")]
+    [assembly: InternalsVisibleTo("SharpRouting.Mvc5.Tests")]
 #endif
