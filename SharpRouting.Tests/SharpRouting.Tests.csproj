@@ -55,6 +55,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssertionExtensions.cs" />
+    <Compile Include="Constraints\ConstraintTests.cs" />
     <Compile Include="Constraints\GuidConstraintTests.cs" />
     <Compile Include="Constraints\Int32ConstraintTests.cs" />
     <Compile Include="FakeConstraint.cs" />

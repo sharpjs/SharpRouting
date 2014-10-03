@@ -12,6 +12,18 @@ namespace SharpRouting
     public static class RouteExtensions
     {
         /// <summary>
+        ///   Gets or sets whether SharpRouting constraints are ignored during URL generation.
+        ///   The default value is <c>false</c> (not ignored).
+        /// </summary>
+        /// <remarks>
+        ///   If this property is set to <c>true</c>, URLs can be generated
+        ///     (for example, by <c>Url.RouteUrl</c>) that violate the constraints for a route.
+        ///   This can be useful if client-side code, such as a templating engine,
+        ///     will reform the URL into a valid one.
+        /// </remarks>
+        public static bool IgnoreConstraintsWhenGeneratingUrls { get; set; }
+
+        /// <summary>
         ///   Maps URL routes for a root controller, using the given specification.
         /// </summary>
         /// <param name="routes">The collection of URL routes.</param>

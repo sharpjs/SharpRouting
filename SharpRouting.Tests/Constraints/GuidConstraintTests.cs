@@ -6,8 +6,13 @@ using NUnit.Framework;
 namespace SharpRouting.Constraints
 {
     [TestFixture]
-    public class GuidConstraintTests
+    public class GuidConstraintTests : ConstraintTests
     {
+        protected override IRouteConstraint CreateConstraint()
+        {
+            return GuidConstraint.Instance;
+        }
+
         [Test]
         public void Match_Missing()
         {
@@ -23,7 +28,7 @@ namespace SharpRouting.Constraints
         [Test]
         public void Match_Unparseable()
         {
-            Match(new { p = "not a guid" }).Should().BeFalse();
+            Match(new { p = "not a Guid" }).Should().BeFalse();
         }
 
         [Test]
@@ -39,6 +44,21 @@ namespace SharpRouting.Constraints
         }
 
         [Test]
+        public void Match_Generating()
+        {
+            Direction = RouteDirection.UrlGeneration;
+            Match(new { p = "not a Guid" }).Should().BeFalse();
+        }
+
+        [Test]
+        public void Match_Generating_Ignore()
+        {
+            RouteExtensions.IgnoreConstraintsWhenGeneratingUrls = true;
+            Direction = RouteDirection.UrlGeneration;
+            Match(new { p = "not a Guid" }).Should().BeTrue();
+        }
+
+        [Test]
         public void ExtensionMethod()
         {
             var routes = new RouteCollection();
@@ -50,12 +70,6 @@ namespace SharpRouting.Constraints
 
             routes["Root.A"].ShouldBeRoute("{p}", "Root", "A",
                 constraints: new { p = GuidConstraint.Instance });
-        }
-
-        private static bool Match(object values)
-        {
-            return GuidConstraint.Instance
-                .Match(null, null, "p", new RouteValueDictionary(values), RouteDirection.IncomingRequest);
         }
     }
 }

@@ -6,8 +6,13 @@ using NUnit.Framework;
 namespace SharpRouting.Constraints
 {
     [TestFixture]
-    public class Int32ConstraintTests
+    public class Int32ConstraintTests : ConstraintTests
     {
+        protected override IRouteConstraint CreateConstraint()
+        {
+            return Int32Constraint.Instance;
+        }
+
         [Test]
         public void Match_Missing()
         {
@@ -39,6 +44,21 @@ namespace SharpRouting.Constraints
         }
 
         [Test]
+        public void Match_Generating()
+        {
+            Direction = RouteDirection.UrlGeneration;
+            Match(new { p = "not an Int32" }).Should().BeFalse();
+        }
+
+        [Test]
+        public void Match_Generating_Ignore()
+        {
+            RouteExtensions.IgnoreConstraintsWhenGeneratingUrls = true;
+            Direction = RouteDirection.UrlGeneration;
+            Match(new { p = "not an Int32" }).Should().BeTrue();
+        }
+
+        [Test]
         public void ExtensionMethod()
         {
             var routes = new RouteCollection();
@@ -50,12 +70,6 @@ namespace SharpRouting.Constraints
 
             routes["Root.A"].ShouldBeRoute("{p}", "Root", "A",
                 constraints: new { p = Int32Constraint.Instance });
-        }
-
-        private static bool Match(object values)
-        {
-            return Int32Constraint.Instance
-                .Match(null, null, "p", new RouteValueDictionary(values), RouteDirection.IncomingRequest);
         }
     }
 }

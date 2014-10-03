@@ -55,6 +55,9 @@
     <Compile Include="..\SharpRouting.Tests\AssertionExtensions.cs">
       <Link>AssertionExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\SharpRouting.Tests\Constraints\ConstraintTests.cs">
+      <Link>Constraints\ConstraintTests.cs</Link>
+    </Compile>
     <Compile Include="..\SharpRouting.Tests\Constraints\GuidConstraintTests.cs">
       <Link>Constraints\GuidConstraintTests.cs</Link>
     </Compile>

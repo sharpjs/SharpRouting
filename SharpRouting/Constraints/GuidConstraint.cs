@@ -32,6 +32,10 @@ namespace SharpRouting.Constraints
         public bool Match(HttpContextBase httpContext, Route route, string parameterName,
             RouteValueDictionary values, RouteDirection routeDirection)
         {
+            if (routeDirection == RouteDirection.UrlGeneration &&
+                RouteExtensions.IgnoreConstraintsWhenGeneratingUrls)
+                return true;
+
             Guid value;
             var candidate = values[parameterName];
             return candidate is Guid
