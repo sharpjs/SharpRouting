@@ -13,7 +13,7 @@ Benefits include:
 
 **What about MVC 5?** MVC 5 introduced [attribute routing](http://blogs.msdn.com/b/webdev/archive/2013/10/17/attribute-routing-in-asp-net-mvc-5.aspx), which provides some of these benefits.  While MVC 5 attribute routing is quite good, SharpRouting retains advantages in versatility, extensibility, and avoidance of duplication.
 
-SharpRouting has 100% code coverage by a suite of automated unit tests.  Each method and type has IntelliSense documentation.
+SharpRouting has 100% code coverage by a suite of automated unit tests.  Every public method and type has IntelliSense documentation.
 
 ## Getting Started
 
@@ -121,15 +121,58 @@ articles.Parameter("id").Constraint(myConstraint).IsAction("Show");
 
 Optional parameters, with or without a default value:
 ```cs
-articles.Parameter("id").Optional()     .IsAction("Show");
-articles.Parameter("id").Default(...)   .IsAction("Show");
+articles.Parameter("id").Optional() .IsAction("Show");
+articles.Parameter("id").Default(42).IsAction("Show");
 ```
+
+## HTTP Methods (Verbs)
+
+To limit a route to a specific HTTP method, include the matching directive in the route specification.
+
+```cs
+articles.Url("id").Get().IsAction("Show");
+```
+
+Multiple directives can be specified.  The route will match if the request uses any of the specified methods.
+
+```cs
+articles.Url("id").Put().Post().IsAction("Update");
+```
+
+All HTTP 1.1 methods are supported: `.Get()` `.Post()` `.Put()` `.Delete()` `.Head()` `.Patch()` `.Options()`
+
+## Actions
+
+Route specifications that end with `.IsAction(...)` create a route for a specific action.  The parameter is the action name, which must match the name of an action method or an action name specified by [ActionNameAttribute](http://msdn.microsoft.com/en-us/library/system.web.mvc.actionnameattribute.aspx).
+
+For example, in **ArticlesController.cs**:
+```cs
+public static void RegisterRoutes(IRouteBuilder articles)
+{
+    articles.Url("id").Get().IsAction("Show");
+}
+
+public ActionResult Show()
+{
+    ....
+}
+```
+
+#### Actions and Route Names
+
+By default, the action name also determines the name of the created route.  The code above creates a route named **Articles.Show**, following a *controller*.*action* naming scheme.  It is possible to specify an alternate string for the second half of this name:
+
+```cs
+articles.Url("id").Get().IsAction("Show", route: "ShowFull");
+```
+
+This creates a route named **Articles.ShowFull**.
 
 ## Grouping
 
 Use a parameter with multiple routes:
 
-```cs
+```csharp
 articles.Parameter("id").Is(article =>
 {
     article.Url("").Get().IsAction("Show");
@@ -139,7 +182,13 @@ articles.Parameter("id").Is(article =>
 
 ## Areas
 
-Areas are supported fully.  Documentation here is in progress.
+Routing for an area is equally simple as routing for a controller.  Just tell SharpRouting about a controller that represents the root of the area:
+
+```csharp
+home.Url("admin").IsArea<Area.Admin.Controllers.AdminController>();
+```
+
+The controller can be empty (no action methods) if desired.  SharpRouting will invoke the controller's **RegisterRoutes** method to discover the routes for the area.
 
 ## Helper Methods
 
