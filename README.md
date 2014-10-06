@@ -1,6 +1,6 @@
 # SharpRouting: Fluent Routing API for ASP.NET MVC
 
-**SharpRouting** is a simple, lightweight API that makes routing easier in ASP.NET MVC projects.  It is available as a NuGet package for [MVC 4](https://www.nuget.org/packages/SharpRouting.Mvc4).  A package for MVC 5 is coming soon.
+**SharpRouting** is a simple, lightweight API that makes routing easier in ASP.NET MVC projects.  It is available as a NuGet package for [MVC 4](https://www.nuget.org/packages/SharpRouting.Mvc4) or [MVC 5.x](https://www.nuget.org/packages/SharpRouting.Mvc5).
 
 Benefits include:
 * Create routes with less code.
@@ -8,16 +8,16 @@ Benefits include:
 * Fluent interface guides you to correct usage.
 * Split complex routing into manageable chunks.
 * [Don't Repeat Yourself](http://en.wikipedia.org/wiki/Don't_repeat_yourself): Avoid copy-pasting shared bits among routes.
-* Fully compatible with [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) and [resource-oriented](http://en.wikipedia.org/wiki/Resource-oriented_architecture), approaches.
+* Fully compatible with [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) and [resource-oriented](http://en.wikipedia.org/wiki/Resource-oriented_architecture) approaches.
 * Extend the API with your own routing conventions.
 
 **What about MVC 5?** MVC 5 introduced [attribute routing](http://blogs.msdn.com/b/webdev/archive/2013/10/17/attribute-routing-in-asp-net-mvc-5.aspx), which provides some of these benefits.  While MVC 5 attribute routing is quite good, SharpRouting retains advantages in versatility, extensibility, and avoidance of duplication.
 
-**WARNING:** SharpRouting is in limited beta testing.  It might not work at all.  If you run into trouble, send a tweet to @sharpjs.
+SharpRouting has 100% code coverage by a suite of automated unit tests.  Each method and type has IntelliSense documentation.
 
 ## Getting Started
 
-First off, you need to install the appropriate NuGet package: [MVC 4](https://www.nuget.org/packages/SharpRouting.Mvc4).  MVC 5 support is coming soon.
+First off, you need to install the appropriate NuGet package: [MVC 4](https://www.nuget.org/packages/SharpRouting.Mvc4) or [MVC 5.x](https://www.nuget.org/packages/SharpRouting.Mvc5)
 
 Next, you should add a **using** directive at the top of each file that uses SharpRouting.
 
@@ -29,7 +29,7 @@ using SharpRouting;
 
 Most projects have a **root controller**.  Often called **HomeController**, this controller handles requests to the app's base URL.  Let's create a route for it — fluently.
 
-In **RouteConfig**, we need just one line to identify the root controller:
+In **RouteConfig** (or wherever your routing configuration is), we need just one line to identify the root controller:
 ```cs
 public static void RegisterRoutes(RouteCollection routes)
 {
@@ -56,8 +56,6 @@ The **RegisterRoutes** method is special.  When you tell SharpRouting to map rou
 `Get()` means that the route will apply only to GET requests.
 
 `IsAction("Index")` indicates the name of the action name that will handle requests.  This method also creates the route and adds it to the route collection.
-
-TODO: Show equivalent traditional route here.
 
 ## Controllers
 
@@ -95,8 +93,6 @@ In SharpRouting, controllers are organized hierarchically.  Except for the root 
 
 ## Parameters
 
-In progress
-
 Typical example:
 ```cs
 articles.Parameter("id").IsAction("Show");
@@ -107,17 +103,31 @@ Multiple parameters:
 articles.Parameter("year").Parameter("id").IsAction("Show");
 ```
 
-More options:
+A parameter limited to a specific data type:
+```cs
+articles.Parameter("id").Guid().IsAction("Show");
+```
+Currenly, only `Guid` and `Int32` constraints are implemented.
+
+A parameter that must match a regular expression pattern:
+```cs
+articles.Parameter("id").Pattern("^[a-z0-9]+$").IsAction("Show");
+```
+
+A parameter that must match a custom **IRouteConstraint**:
+```cs
+articles.Parameter("id").Constraint(myConstraint).IsAction("Show");
+```
+
+Optional parameters, with or without a default value:
 ```cs
 articles.Parameter("id").Optional()     .IsAction("Show");
 articles.Parameter("id").Default(...)   .IsAction("Show");
-articles.Parameter("id").Pattern(...)   .IsAction("Show");
-articles.Parameter("id").Constraint(...).IsAction("Show");
 ```
 
-## Subscopes (Name?)
+## Grouping
 
-In progress
+Use a parameter with multiple routes:
 
 ```cs
 articles.Parameter("id").Is(article =>
@@ -129,13 +139,11 @@ articles.Parameter("id").Is(article =>
 
 ## Areas
 
-In progress
+Areas are supported fully.  Documentation here is in progress.
 
 ## Helper Methods
 
-Incomplete
-
-In a few advanced cases, it might be more straightforward to create a route directly, rather than via the fluent API.  SharpRouting provides several extension methods to help make custom routes more concise.
+In a few advanced cases, it might be more straightforward to create a route directly, rather than via the fluent API.  SharpRouting provides several extension methods to help make custom routes more concise.  These methods all work on raw **Route** objects.
 
 To limit a route to specific HTTP verbs:
 ```cs
