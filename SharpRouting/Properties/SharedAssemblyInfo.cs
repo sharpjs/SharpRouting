@@ -10,7 +10,7 @@ using System.Security;
 
 // Version
 [assembly: AssemblyVersion              ("1.0.*")]        // Assembly
-[assembly: AssemblyInformationalVersion ("1.0.0-beta4")]  // NuGet Package
+[assembly: AssemblyInformationalVersion ("1.0.0")]        // NuGet Package
 
 // Compliance
 [assembly: CLSCompliant(true)]
