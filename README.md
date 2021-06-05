@@ -1,3 +1,17 @@
+#### `DEVELOPMENT HALTED`
+
+This project has fulfilled its purpose.  It began in a time when ASP.NET Core
+did not exist and when ASP.NET MVC provided only a rudimentary paradigm for
+configuring routes.  Later, ASP.NET MVC 5 and ASP.NET Core introduced support
+for [attribute routing](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-5.0#attribute-routing-for-rest-apis),
+which provides much of the capability of SharpRouting while being easier to
+understand.  Attribute routing is built in and good enough.  Thus there is no
+need for further development in this repository.
+
+SharpRouting continues to be used in a few production scenarios.  Owing to 100%
+code coverage by automated tests, no one ever reported a bug in this package,
+nor do I expect any bug report in future.
+
 # SharpRouting: Fluent Routing API for ASP.NET MVC
 
 **SharpRouting** is a simple, lightweight API that makes routing easier in ASP.NET MVC projects.  It is available as a NuGet package for [MVC 4](https://www.nuget.org/packages/SharpRouting.Mvc4) or [MVC 5.x](https://www.nuget.org/packages/SharpRouting.Mvc5).
